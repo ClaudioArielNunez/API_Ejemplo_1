@@ -42,7 +42,16 @@ namespace ApiFotos.Controllers
             try
             {
                 var photo = context.Fotos.FirstOrDefault(x => x.Id == id);
-                response.Data = photo;
+                if (photo != null)
+                {
+                    response.Data = photo;
+                }
+                else
+                {
+                    response.IsSuccess=false;
+                    response.Message = "No existe ese Id";
+                }
+                
             }
             catch (Exception ex)
             {
@@ -58,7 +67,16 @@ namespace ApiFotos.Controllers
             try
             {
                 var photo = context.Fotos.FirstOrDefault(x => x.Titulo == titulo);
-                response.Data = photo;
+                if(photo != null)
+                {
+                    response.Data = photo;
+                }
+                else
+                {
+                    response.IsSuccess =false;
+                    response.Message = "No hay foto con ese titulo";
+                }
+                
             }
             catch (Exception ex)
             {
@@ -69,7 +87,7 @@ namespace ApiFotos.Controllers
         }
 
         [HttpPost("PostPhoto")]
-        public ResponseDto PostPhoto([FromBody] MarvelFotos foto)
+        public ResponseDto PostPhoto([FromBody] MarvelFotos foto) //podemos sacar [FromBody]?
         {
             try
             {
