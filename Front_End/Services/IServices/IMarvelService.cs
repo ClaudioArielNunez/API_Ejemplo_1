@@ -7,11 +7,13 @@ namespace Front_End.Services.IServices
     public interface IMarvelService
     {
         //Traemos todos los metodos
-        Task<ResponseDto> GetPhotosAsync();
-        Task<ResponseDto> GetPhotoByIdAsync(int id);
-        Task<ResponseDto> GetPhotoByTitleAsync(string title);
-        Task<ResponseDto> PostPhotoAsync(MarvelFoto photo);
-        Task<ResponseDto> PutPhotoAsync(MarvelFoto photo);
-        Task<ResponseDto> DeletePhotoByIdAsync(int id);
+        //el ? después de ResponseDto en Task<ResponseDto?> significa que el método
+        //asíncrono puede devolver un ResponseDto o null
+        Task<ResponseDto?> GetPhotosAsync();
+        Task<ResponseDto?> GetPhotoByIdAsync(int id);
+        Task<ResponseDto?> GetPhotoByTitleAsync(string title);
+        Task<ResponseDto?> PostPhotoAsync(MarvelFoto photo);
+        Task<ResponseDto?> PutPhotoAsync(MarvelFoto photo);
+        Task<ResponseDto?> DeletePhotoByIdAsync(int id);
     }
 }

@@ -1,13 +1,12 @@
 ﻿using Front_End.Models;
+using Front_End.Services.IServices;
 using Front_End.Utility;
 using Newtonsoft.Json;
-using System;
 using System.Text;
-using System.Text.Json.Serialization;
 
 namespace Front_End.Services
 {
-    public class MarvelService
+    public class MarvelService : IMarvelService
     {
         private readonly IHttpClientFactory clientFactory;
 
@@ -17,17 +16,21 @@ namespace Front_End.Services
         {
             this.clientFactory = clientFactory;
         }
+                
 
         //Este método realiza la mayoría de las operaciones de comunicación con la API.
-        private async Task<ResponseDto> SendAsync(RequestDto requestDto)
+        //Este método básicamente configura una solicitud HTTP basada en la información proporcionada (requestDto), la envía,
+        //maneja la respuesta y devuelve el resultado en un objeto ResponseDto.
+        private async Task<ResponseDto> SendAsync(RequestDto requestDto) //El método toma un argumento requestDto que contiene la información de la solicitud.
         {
             //Crea una instancia de ResponseDto para almacenar la respuesta.
             var response = new ResponseDto();
-            
+
             try
             {
                 //Crea un HttpClient usando clientFactory y lo llama "MarvelApi". Esto es para hacer solicitudes HTTP.
                 HttpClient client = clientFactory.CreateClient("MarvelApi"); //puede ser cualquier nombre
+                
 
                 //Crea un nuevo mensaje de solicitud HTTP (HttpRequestMessage).
                 //Agrega un encabezado a la solicitud indicando que espera recibir datos en formato JSON.
@@ -35,6 +38,7 @@ namespace Front_End.Services
                 HttpRequestMessage message = new HttpRequestMessage();
                 message.Headers.Add("Accept", "application/json");
                 message.RequestUri = new Uri(requestDto.Url);
+                
 
                 //Si hay datos en requestDto.Data, los convierte a JSON y los agrega al cuerpo de la solicitud.
                 if (requestDto.Data != null)
@@ -102,5 +106,61 @@ namespace Front_End.Services
             }
             return response;
         }
+
+        //implementacion de la interfaz
+        public async Task<ResponseDto?> GetPhotosAsync()
+        {
+            return await SendAsync(new RequestDto()
+            {
+                ApiType = SD.ApiType.GET,
+                Url = SD.ApiMarvel + "api/MarvelFotos/GetPhotos",
+            });
+        }
+        public async Task<ResponseDto?> GetPhotoByIdAsync(int id)
+        {
+            return await SendAsync(new RequestDto()
+            {
+                ApiType = SD.ApiType.GET,
+                Url = SD.ApiMarvel + "api/MarvelFotos/GetPhotoById/{id}",
+            });
+        }
+
+        public async Task<ResponseDto?> GetPhotoByTitleAsync(string title)
+        {
+            return await SendAsync(new RequestDto()
+            {
+                ApiType = SD.ApiType.GET,
+                Url = SD.ApiMarvel + "api/MarvelFotos/GetPhotoByTitle/{title}",
+            });
+        }
+
+        public async Task<ResponseDto?> PostPhotoAsync(MarvelFoto photo)
+        {
+            return await SendAsync(new RequestDto()
+            {
+                ApiType = SD.ApiType.POST,
+                Url = SD.ApiMarvel + "api/MarvelFotos/PostPhoto",
+                Data = photo,
+            });
+        }
+
+        public async Task<ResponseDto?> PutPhotoAsync(MarvelFoto photo)
+        {
+            return await SendAsync(new RequestDto()
+            {
+                ApiType = SD.ApiType.PUT,
+                Url = SD.ApiMarvel + "api/MarvelFotos/PutPhoto",
+                Data = photo,
+            });
+        }
+        public async Task<ResponseDto?> DeletePhotoByIdAsync(int id)
+        {
+            return await SendAsync(new RequestDto()
+            {
+                ApiType = SD.ApiType.DELETE,
+                Url = SD.ApiMarvel + "api/MarvelFotos/DeletePhotoById/{id}",
+            });
+        }
+
     }
 }
