@@ -1,3 +1,7 @@
+using Front_End.Services;
+using Front_End.Services.IServices;
+using Front_End.Utility;
+
 namespace Front_End
 {
     public class Program
@@ -8,6 +12,13 @@ namespace Front_End
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            //agregamos el httpClient para las solicitudes
+            builder.Services.AddHttpClient<IMarvelService, MarvelService>();
+
+            //Asignamos configuracion de appsetting.json
+            SD.ApiMarvel = builder.Configuration["ServiceUrls:ApiMarvel"];
+            builder.Services.AddScoped<IMarvelService, MarvelService>();
 
             var app = builder.Build();
 
