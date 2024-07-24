@@ -81,6 +81,10 @@ namespace Front_End.Services
                         response.IsSuccess = false;
                         response.Message = "Not Found";
                         break;
+                    case System.Net.HttpStatusCode.BadRequest:
+                        response.IsSuccess = false;
+                        response.Message = "Bad Request";
+                        break;
                     case System.Net.HttpStatusCode.Unauthorized:
                         response.IsSuccess = false;
                         response.Message = "Unauthorized";
@@ -121,7 +125,7 @@ namespace Front_End.Services
             return await SendAsync(new RequestDto()
             {
                 ApiType = SD.ApiType.GET,
-                Url = SD.ApiMarvel + "api/MarvelFotos/GetPhotoById/{id}",
+                Url = SD.ApiMarvel + $"api/MarvelFotos/GetPhotoById/{id}",
             });
         }
 

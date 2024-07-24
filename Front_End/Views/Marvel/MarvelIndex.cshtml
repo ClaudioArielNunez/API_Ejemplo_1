@@ -1,0 +1,71 @@
+﻿@model IEnumerable<MarvelFoto>
+
+<div class="card shadow border-0 mt-4">
+	<div class="card-header bg-secondary bg-gradient ml-0 py-3">
+		<div class="row">
+			<div class="col-12 text-center">
+				<h1 class="text-white">Photos List</h1>
+			</div>
+		</div>
+	</div>
+	<div class="card-body p-4">
+		<div class="row pb-3">
+			<div class="col-6">
+			</div>
+			<div class="col-6 text-end">
+				<a asp-action="MarvelCreate" class="btn btn-outline-primary"><i class="bi bi-plus-square"></i> Add New Photo</a>
+
+			</div>
+		</div>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>
+						Titulo
+					</th>					
+					<th>
+						Imagen
+					</th>
+					<th>
+						Descripción
+					</th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var item in Model)
+				{
+					<tr>
+						<td>
+							@item.Titulo
+						</td>						
+						<td>
+							<img src="@item.ImagenUrl" alt="Image Description" style="max-width: 100px; max-height: 100px;">
+
+						</td>
+						<td>
+							@item.Descripcion
+						</td>
+						<td>
+							<a class="btn btn-danger" asp-action="MarvelDelete" asp-route-id="@item.Id">
+								<i class="bi bi-trash"></i>
+							</a>
+
+						</td>
+
+						<td>
+							<a class="btn btn-secondary" asp-action="MarvelEdit" asp-route-id="@item.Id">
+								<i class="bi bi-file-arrow-up"></i>
+							</a>
+
+						</td>
+					</tr>
+				}
+
+			</tbody>
+		</table>
+
+	</div>
+
+</div>

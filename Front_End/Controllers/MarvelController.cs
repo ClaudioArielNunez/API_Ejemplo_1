@@ -23,7 +23,7 @@ namespace Front_End.Controllers
 
             if (response != null && response.IsSuccess == true)
             {
-                string? jsonPhotos = (string)response.Data;
+                string? jsonPhotos = Convert.ToString(response.Data);
                 photos = JsonConvert.DeserializeObject<List<MarvelFoto>>(jsonPhotos);
             }
             return View(photos);
@@ -81,10 +81,11 @@ namespace Front_End.Controllers
             ResponseDto? response = await _marvelService.GetPhotoByIdAsync(id);
             if(response != null && response.IsSuccess == true)
             {
-                string? jsonPhoto = (string)response.Data;
-                MarvelFoto? model = JsonConvert.DeserializeObject< MarvelFoto>(jsonPhoto);
+                string jsonPhoto = Convert.ToString(response.Data);
+                MarvelFoto? model = JsonConvert.DeserializeObject<MarvelFoto>(jsonPhoto);
+				
 
-                return View(model);
+				return View(model);
             }
             return NotFound();
         }
