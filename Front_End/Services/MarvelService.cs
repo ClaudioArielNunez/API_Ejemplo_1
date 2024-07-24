@@ -134,7 +134,7 @@ namespace Front_End.Services
             return await SendAsync(new RequestDto()
             {
                 ApiType = SD.ApiType.GET,
-                Url = SD.ApiMarvel + "api/MarvelFotos/GetPhotoByTitle/{title}",
+                Url = SD.ApiMarvel + $"api/MarvelFotos/GetPhotoByTitle/{title}",
             });
         }
 
@@ -162,7 +162,7 @@ namespace Front_End.Services
             return await SendAsync(new RequestDto()
             {
                 ApiType = SD.ApiType.DELETE,
-                Url = SD.ApiMarvel + "api/MarvelFotos/DeletePhotoById/{id}",
+                Url = SD.ApiMarvel + $"api/MarvelFotos/DeletePhotoById/{id}",
             });
         }
 

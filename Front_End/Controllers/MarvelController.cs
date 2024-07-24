@@ -56,7 +56,7 @@ namespace Front_End.Controllers
 
             if(response != null && response.IsSuccess == true)
             {
-                string? jsonPhoto = (string)response.Data;
+                string? jsonPhoto = Convert.ToString(response.Data);
                 MarvelFoto? model = JsonConvert.DeserializeObject<MarvelFoto>(jsonPhoto);
 
                 return View(model);
