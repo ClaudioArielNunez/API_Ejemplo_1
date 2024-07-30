@@ -2,7 +2,6 @@
 using ApiFotos.Models;
 using ApiFotos.Models.Dto;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.ResponseCompression;
 
 namespace ApiFotos.Controllers
 {
@@ -16,10 +15,10 @@ namespace ApiFotos.Controllers
         public MarvelFotosController(AppDbContext context)
         {
             this.context = context;
-            this.response = new ResponseDto(); 
+            this.response = new ResponseDto();
         }
 
-        [HttpGet ("GetPhotos")]
+        [HttpGet("GetPhotos")]
         public ResponseDto GetPhotos()
         {
             try
@@ -30,14 +29,14 @@ namespace ApiFotos.Controllers
             catch (Exception ex)
             {
                 //En caso de q haya error
-                response.IsSuccess = false;     
+                response.IsSuccess = false;
                 response.Message = ex.Message;
             }
             return response;
         }
 
         [HttpGet("GetPhotoById/{id}")]
-        public ResponseDto GetPhotoById(int id) 
+        public ResponseDto GetPhotoById(int id)
         {
             try
             {
@@ -48,10 +47,10 @@ namespace ApiFotos.Controllers
                 }
                 else
                 {
-                    response.IsSuccess=false;
+                    response.IsSuccess = false;
                     response.Message = "No existe ese Id";
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -67,16 +66,16 @@ namespace ApiFotos.Controllers
             try
             {
                 var photo = context.Fotos.FirstOrDefault(x => x.Titulo == titulo);
-                if(photo != null)
+                if (photo != null)
                 {
                     response.Data = photo;
                 }
                 else
                 {
-                    response.IsSuccess =false;
+                    response.IsSuccess = false;
                     response.Message = "No hay foto con ese titulo";
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -87,7 +86,7 @@ namespace ApiFotos.Controllers
         }
 
         [HttpPost("PostPhoto")]
-        public ResponseDto PostPhoto([FromBody] MarvelFotos foto) //podemos sacar [FromBody]?
+        public ResponseDto PostPhoto([FromBody] MarvelFotos foto) 
         {
             try
             {
@@ -134,8 +133,8 @@ namespace ApiFotos.Controllers
             catch (Exception ex)
             {
                 response.IsSuccess = false;
-                response.Message=ex.Message;
-            }            
+                response.Message = ex.Message;
+            }
             return response;
         }
 
